@@ -151,14 +151,15 @@ class Admin_fancybox_Controller extends Admin_Controller {
 
         if ($titlePosition != "hide"):
           $_title .= "'titleFormat' : function(title, currentArray, currentIndex, currentOpts) { ";
+          $_titlestring = "'Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + (title == '' ? '' : ': ' + title)";
         endif;
         switch ($titlePosition):
           case "over":
-            $_title .= "return '<span id=\"fancybox-title-over\">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + ' : ' + title + '</span>'; }";
+            $_title .= "return '<span id=\"fancybox-title-over\">' + " . $_titlestring . " + '</span>'; }";
             $this->write_setting($Handle, "titlePosition", $titlePosition, "default", 3);
             break;
           case "over_dynamic":
-            $_title .= "return '<span id=\"fancybox-title-over\">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + ' : ' + title + '</span>'; }\n";
+            $_title .= "return '<span id=\"fancybox-title-over\">' + " . $_titlestring . " + '</span>'; }\n";
             $this->write_setting($Handle, "titlePosition", "over", "", 3);
             $_title .= ",'onComplete' :	function() { $(\"#fancybox-wrap\").hover(function() { $(\"#fancybox-title\").show(); }, function() { $(\"#fancybox-title\").hide(); });	}";
             break;
@@ -168,7 +169,7 @@ class Admin_fancybox_Controller extends Admin_Controller {
           case "outside":
           case "inside":
           default:
-            $_title .= "        return 'Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' : ' + title;\n      }";
+            $_title .= "return " . $_titlestring . ";\n      }";
             break;
         endswitch;
         $this->write_line($Handle, $_title);
