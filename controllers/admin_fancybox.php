@@ -152,6 +152,7 @@ class Admin_fancybox_Controller extends Admin_Controller {
         if ($titlePosition != "hide"):
           $_title .= "'titleFormat' : function(title, currentArray, currentIndex, currentOpts) { ";
           $_titlestring = "'Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + (title == '' ? '' : ': ' + title)";
+	  $_titlestring .= "+ ' (' + currentArray[currentIndex].getAttribute(\"data-date\") + ')'";
         endif;
         switch ($titlePosition):
           case "over":
